@@ -143,7 +143,9 @@ public class ImageInstaller(
                 pngBytes = buffer.ToArray();
             }
 
+            // LUT columns are merged only when the mod opts in with lut_merge = true in the replacement's meta. Otherwise the LUT replaces like any other sprite, so a mod can still recolour or shrink the vanilla LUT.
             if (baseName.EndsWith("_lut", StringComparison.OrdinalIgnoreCase) &&
+                gameMeta.Meta?.LutMerge == true &&
                 TryMergeLut(spriteName, baseName, pngBytes, gameMeta, gameMetaPath, reportStatus))
             {
                 continue;
